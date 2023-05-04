@@ -36,7 +36,7 @@ const MainComponent = () => {
          document.getElementById("webcam-container").appendChild(webcam.canvas);
          labelContainer = document.getElementById("label-container");
          for (let i = 0; i < maxPredictions; i++) { // and class labels
-             labelContainer.appendChild(document.createElement("div")).className="bg-orange-100 flex w-full";
+             labelContainer.appendChild(document.createElement("div")).className="flex w-full h-10 bg-white";
          }
      }
  
@@ -54,10 +54,37 @@ const MainComponent = () => {
          for (let i = 0; i < 6; i++) {
             var barWidth = prediction[i].probability.toFixed(2)*100 + "%";
             var labelTitle = prediction[i].className;
-            var animalName = "<div className=''>" + labelTitle + "</div>"
-            var animmalBar = "<div class='w-full bg-gray-200 rounded-full'><div class='bg-blue-600 h-full text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-            var animmalBar2 = "<div class='w-full bg-gray-200 rounded-full'><div class='bg-blue-600 h-full text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-            labelContainer.childNodes[i].innerHTML = animalName + animmalBar;
+            var animalName = "<div class='w-40 h-full'>" + labelTitle + "</div>"
+            var animmalBar1 = "<div class='w-full h-full bg-[#f0bcd4] rounded-lg'><div class='bg-[#FF99C8] h-full text-md font-medium text-black text-center p-0.5 leading-none rounded-lg' style='width: " + barWidth + " '><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+            var animmalBar2 = "<div class='w-full h-full bg-[#faf7dd] rounded-lg'><div class='bg-[#FCF6BD] h-full text-md font-medium text-black text-center p-0.5 leading-none rounded-lg' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+            var animmalBar3 = "<div class='w-full h-full bg-[#ddefe4] rounded-lg'><div class='bg-[#aef4c9] h-full text-md font-medium text-black text-center p-0.5 leading-none rounded-lg' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+            var animmalBar4 = "<div class='w-full h-full bg-[#ceeaf8] rounded-lg'><div class='bg-[#A9DEF9] h-full text-md font-medium text-black text-center p-0.5 leading-none rounded-lg' style='width : " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+            var animmalBar5 = "<div class='w-full h-full bg-[#ebd8f7] rounded-lg'><div class='bg-[#E4C1F9] h-full text-md font-medium text-black text-center p-0.5 leading-none rounded-lg' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+            var animmalBar6 = "<div class='w-full h-full bg-sky-600 rounded-lg'><div class='bg-blue-600 h-full text-md font-medium text-black text-center p-0.5 leading-none rounded-lg' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+            switch(i){
+                case 0:
+                    labelContainer.childNodes[i].innerHTML = animalName + animmalBar1;
+                    break;
+                case 1:
+                    labelContainer.childNodes[i].innerHTML = animalName + animmalBar2;
+                    break;
+                case 2:
+                    labelContainer.childNodes[i].innerHTML = animalName + animmalBar3;
+                    break;
+                case 3:
+                    labelContainer.childNodes[i].innerHTML = animalName + animmalBar4;
+                    break;
+                case 4:
+                    labelContainer.childNodes[i].innerHTML = animalName + animmalBar5;
+                    break;
+                case 5:
+                    labelContainer.childNodes[i].innerHTML = animalName + animmalBar6;
+                    break;
+                default :
+                    console.log(i);
+                    break;
+            }
+            //labelContainer.childNodes[i].innerHTML = animalName + animmalBar;
          }
      }
      
