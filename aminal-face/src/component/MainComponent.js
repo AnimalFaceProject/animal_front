@@ -4,17 +4,26 @@ import * as tmImage from '@teachablemachine/image';
 
 const MainComponent = () => {
 
-    {/**
-    useEffect(() => {
-        init();
-      }, []);
- */}
-     // the link to your model provided by Teachable Machine export panel
-     const URL = "https://teachablemachine.withgoogle.com/models/MOKr2fQhl/";
-     const modelURL = URL + 'model.json';
-     const metadataURL = URL + 'metadata.json';
+    // the link to your model provided by Teachable Machine export panel
+    const URL = "https://teachablemachine.withgoogle.com/models/MOKr2fQhl/";
+    const modelURL = URL + 'model.json';
+    const metadataURL = URL + 'metadata.json';
 
-     let model, webcam, labelContainer, maxPredictions;
+    let model, webcam, labelContainer, maxPredictions, requestId;
+
+    const [count, setCount] = useState(5);
+    const [check, setCheck] = useState(0);
+
+    const time = useRef(5);
+
+    const timer = () =>{
+        const id = setInterval(() => {
+            setCount(count => count -1);
+            time.current = time.current - 1;
+          }, 1000);
+      
+          return () => clearInterval(id);
+    }
 
      // Load the image model and setup the webcam
      async function init() {
@@ -27,11 +36,11 @@ const MainComponent = () => {
 
          // Convenience function to setup a webcam
          const flip = true; // whether to flip the webcam
-         webcam = new tmImage.Webcam(800, 800, flip); // width, height, flip
+         webcam = new tmImage.Webcam(600, 600, flip); // width, height, flip
          await webcam.setup(); // request access to the webcam
          await webcam.play();
-         window.requestAnimationFrame(loop);
-
+         requestId = window.requestAnimationFrame(loop);
+         
          // append elements to the DOM
          document.getElementById("webcam-container").appendChild(webcam.canvas);
          labelContainer = document.getElementById("label-container");
@@ -41,16 +50,20 @@ const MainComponent = () => {
      }
  
      async function loop() {
-         webcam.update(); // update the webcam frame
-         await predict();
-         //return
-         window.requestAnimationFrame(loop);
+        await console.log(time.current);
+        if(time.current<=0) return;
+        webcam.update(); // update the webcam frame
+        await predict();
+        requestId = window.requestAnimationFrame(loop);   
      }
  
      // run the webcam image through the image model
-     async function predict() {
+        const predict = async () =>{
          // predict can take in an image, video or canvas html element
-        const prediction = await model.predict(webcam.canvas);
+
+        var prediction = await model.predict(webcam.canvas);
+        prediction.sort((a,b) => parseFloat(b.probability) - parseFloat(a.probability));
+
          for (let i = 0; i < 6; i++) {
             var barWidth = prediction[i].probability.toFixed(2)*100 + "%";
             var labelTitle = prediction[i].className;
@@ -84,19 +97,19 @@ const MainComponent = () => {
                     console.log(i);
                     break;
             }
-            //labelContainer.childNodes[i].innerHTML = animalName + animmalBar;
          }
      }
      
     return(
-    <div className = "flex w-full h-full bg-white">
-        <div className = "w-1/5 h-full bg-black"></div>
+    <div className = "flex w-screen h-screen bg-white">
+        <div className = "w-1/5 h-full bg-white"></div>
         <div className = "w-3/5 h-full bg-white">
-            <button type="button" onClick={init}>Start</button>
+            <button type="button" onClick={() => {init();}}>Start</button>
+            <button type="button" onClick={() => {timer();}}>Break</button>
             <div id="webcam-container" className = "w-full"></div>
             <div id="label-container" className = "w-full bg-slate-50 rounded-lg flex-col"></div>
         </div>
-        <div className = "w-1/5 h-full bg-slate-500"></div>
+        <div className = "w-1/5 h-full bg-white"></div>
     </div>
     )
 }
