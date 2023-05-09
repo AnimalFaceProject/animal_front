@@ -5,7 +5,6 @@ import MainComponent from "./MainComponent";
 const MainPage = () => {
     return(
     <div className = "w-full h-full bg-black">
-        <TopComponent/>
         <MainComponent/>
     </div>
     )
