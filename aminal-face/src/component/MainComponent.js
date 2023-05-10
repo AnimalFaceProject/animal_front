@@ -2,9 +2,13 @@ import React, {useState, useEffect, useRef} from "react";
 import * as tf from '@tensorflow/tfjs';
 import * as tmImage from '@teachablemachine/image';
 import test from '../test.png'
+// 파이어베이서 파일에서 import 해온 db
+import {db} from './firebase'
+// db에 접근해서 데이터를 꺼내게 도와줄 친구들
+import { collection, getDocs, addDoc, updateDoc, doc, getDoc } from "@firebase/firestore";
 
 const MainComponent = () => {
-
+    
     // the link to your model provided by Teachable Machine export panel
     const URL = "https://teachablemachine.withgoogle.com/models/MOKr2fQhl/";
     const modelURL = URL + 'model.json';
@@ -13,16 +17,50 @@ const MainComponent = () => {
     let model, webcam, labelContainer, maxPredictions, requestId;
     var prediction;
 
-    const [count, setCount] = useState(6);
+    const [count, setCount] = useState(5);
     const [participant, setParticipant] = useState(0);
     const [man, setMan] = useState(0);
     const [girl, setGirl] = useState(0);
+    // 이따가 users 추가하고 삭제하는거 진행을 도와줄 state
+    const [data, setData] = useState([]);
+
+    const userDoc = doc(db, "total", "N9jk5i05AKTQPwQL5qnO");
+    // db의 users 컬렉션을 가져옴
+    const usersCollectionRef = collection(db, "total");
+
+    const getUsers = async () => {
+        // getDocs로 컬렉션안에 데이터 가져오기
+         //const user = await getDocs(usersCollectionRef);
+         //user.docs.map((doc)=>({ ...doc.data(), id: doc.id}))
+         //await setData(user.docs.map((doc)=>({ ...doc.data(), id: doc.id})));
+
+         const docSnap = await getDoc(userDoc);
+
+         await setData(docSnap.data())
+         setGirl(docSnap.data().girl);
+         setMan(docSnap.data().man);
+         setParticipant(docSnap.data().participant);
+       }
+
+
+    const updateMan = async() =>{
+
+        // 내가 업데이트 하고자 하는 key를 어떻게 업데이트할지 준비,, 중요한점이 db에는 문자열로 저장되어있다. 그래서 createUsers()함수안에서 age를 생성할때 숫자열로 형변환 해줘야한다
+        const userNumber = {participant: participant + 1};
+        const manNumber = {man: man + 1};
+        const girlNumber = {girl: girl + 1};
+        // updateDoc()을 이용해서 업데이트
+        await updateDoc(userDoc, userNumber);
+        await updateDoc(userDoc, manNumber);
+        await updateDoc(userDoc, girlNumber);
+      }
     
 
     const time = useRef(null);
 
-    const timer = () =>{
-        time.current = 6;
+    const timer = async () =>{
+        updateMan();
+        time.current = 5;
         setParticipant(participant + 1);
         const id = setInterval(() => {
             setCount(count => count -1);
@@ -31,6 +69,12 @@ const MainComponent = () => {
       
           return () => clearInterval(id);
     }
+
+    useEffect(()=>{
+        // 비동기로 데이터 받을준비
+      getUsers();
+    }, [])
+
 
      // Load the image model and setup the webcam
      async function init() {
@@ -206,6 +250,7 @@ const MainComponent = () => {
                 <div id = "first-name" className = "flex justify-center w-full items-center font-bold text-2xl"></div>
                 <div id = "content" className = "w-full mb-4 text-3xl"></div>
                 <div id="label-container" className = "w-full bg-slate-50 rounded-lg flex-col"></div>
+                <div id = "content-character"></div>
             </div>
         <div className = "w-1/5 h-full bg-white"></div>
     </div>
