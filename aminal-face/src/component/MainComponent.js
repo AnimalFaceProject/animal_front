@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from "react";
 import * as tf from '@tensorflow/tfjs';
 import * as tmImage from '@teachablemachine/image';
 import test from '../test.png'
+import Switch from "react-switch";
 // 파이어베이서 파일에서 import 해온 db
 import {db} from './firebase'
 // db에 접근해서 데이터를 꺼내게 도와줄 친구들
@@ -28,6 +29,17 @@ const MainComponent = () => {
     // db의 users 컬렉션을 가져옴
     const usersCollectionRef = collection(db, "total");
 
+    {/*토글버튼관련*/}
+    const [state, setChecked] = useState(true);
+    const onOffChange = () =>{
+        if(state === false) {
+            setChecked(true);
+        }
+        else {
+            setChecked(false);
+        }
+    }
+
     const getUsers = async () => {
         // getDocs로 컬렉션안에 데이터 가져오기
          //const user = await getDocs(usersCollectionRef);
@@ -42,17 +54,21 @@ const MainComponent = () => {
          setParticipant(docSnap.data().participant);
        }
 
-
     const updateMan = async() =>{
-
         // 내가 업데이트 하고자 하는 key를 어떻게 업데이트할지 준비,, 중요한점이 db에는 문자열로 저장되어있다. 그래서 createUsers()함수안에서 age를 생성할때 숫자열로 형변환 해줘야한다
         const userNumber = {participant: participant + 1};
         const manNumber = {man: man + 1};
         const girlNumber = {girl: girl + 1};
+
         // updateDoc()을 이용해서 업데이트
         await updateDoc(userDoc, userNumber);
-        await updateDoc(userDoc, manNumber);
-        await updateDoc(userDoc, girlNumber);
+
+        if(state === false) {
+            await updateDoc(userDoc, manNumber);
+        }
+        else if(state === true){
+            await updateDoc(userDoc, girlNumber);
+        }
       }
     
 
@@ -225,7 +241,7 @@ const MainComponent = () => {
     }
     return(
         <>
-        <div className = "w-full h-24 bg-orange-200 flex flex-col justify-around">
+        <div className = "w-full h-40 bg-orange-200 flex flex-col justify-around">
         <div className = "w-full flex justify-center">동물상 테스트</div>
             <div className = "flex w-full justify-evenly">
                 <div>남자 참가자 수 : {man}</div>
@@ -236,6 +252,82 @@ const MainComponent = () => {
                 <div>여자 참가자 수 : {girl}</div>
             </div>
             <div className = "w-full flex justify-center">현재 참가자 수 : {participant}</div>
+            <div className = "w-full flex justify-center">
+            <label htmlFor="material-switch">
+                <Switch
+                checked={state}
+                onChange={onOffChange}
+                handleDiameter={28}
+                offColor="#869df6"
+                onColor="#f6868a"
+                offHandleColor="#ffffff"
+                onHandleColor="#ffffff"
+                height={40}
+                width={100}
+                borderRadius={6}
+                activeBoxShadow="0px 0px 1px 2px #f7ffe6"
+                uncheckedIcon={
+                    <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "40px",
+                        fontSize: 20,
+                        color: "black",
+                        paddingRight: 2,
+                    }}
+                    >
+                    남자
+                    </div>
+                }
+                checkedIcon={
+                    <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                        fontSize: 22,
+                        color: "white",
+                        paddingRight: 2,
+                    }}
+                    >
+                    여자
+                    </div>
+                }
+                uncheckedHandleIcon={
+                    <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                        fontSize: 20,
+                    }}
+                    >
+                    👨
+                    </div>
+                }
+                checkedHandleIcon={
+                    <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "100%",
+                        color: "red",
+                        fontSize: 18,
+                    }}
+                    >
+                    👩
+                    </div>
+                }
+                className="react-switch"
+                id="small-radius-switch"
+                />
+            </label>
+            </div>
         </div>
 
         <div className = "flex w-screen h-screen bg-white">
