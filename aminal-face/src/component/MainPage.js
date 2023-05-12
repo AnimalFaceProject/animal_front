@@ -4,7 +4,7 @@ import MainComponent from "./MainComponent";
 
 const MainPage = () => {
     return(
-    <div className = "w-full h-full bg-black">
+    <div className = "w-full h-full">
         <MainComponent/>
     </div>
     )

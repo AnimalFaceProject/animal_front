@@ -241,17 +241,17 @@ const MainComponent = () => {
     }
     return(
         <>
-        <div className = "w-full h-40 bg-orange-200 flex flex-col justify-around">
-        <div className = "w-full flex justify-center">동물상 테스트</div>
+        <div className = "w-full h-52 flex flex-col justify-around">
+        <div className = "w-full flex justify-center text-5xl">동물상 테스트</div>
             <div className = "flex w-full justify-evenly">
-                <div>남자 참가자 수 : {man}</div>
-                    <div className = "w-20 flex justify-around">
-                        <button type="button" onClick={() => {init();}}>시작</button>
-                        <button type="button" onClick={() => {timer();}}>판별</button>
+                <div className = "text-4xl">남자 참가자 수 : {man}</div>
+                    <div className = "w-40 flex justify-around">
+                        <button className = "text-4xl" type="button" onClick={() => {init();}}>시작</button>
+                        <button className = "text-4xl" type="button" onClick={() => {timer();}}>판별</button>
                     </div>
-                <div>여자 참가자 수 : {girl}</div>
+                <div className = "text-4xl">여자 참가자 수 : {girl}</div>
             </div>
-            <div className = "w-full flex justify-center">현재 참가자 수 : {participant}</div>
+            <div className = "w-full flex justify-center text-4xl">현재 참가자 수 : {participant}</div>
             <div className = "w-full flex justify-center">
             <label htmlFor="material-switch">
                 <Switch
@@ -330,9 +330,9 @@ const MainComponent = () => {
             </div>
         </div>
 
-        <div className = "flex w-screen h-screen bg-white">
-            <div className = "w-1/5 h-full bg-white"></div>
-            <div className = "w-3/5 h-full bg-white">
+        <div className = "flex w-screen h-screen">
+            <div className = "w-1/5 h-full"></div>
+            <div className = "w-3/5 h-full">
                 <div id="webcam-container" className = "w-full relative">
                 <div className = "h-full w-full absolute z-10 flex justify-center items-center">
                     <div className = "text-9xl text-orange-50">{time.current}</div>
@@ -344,7 +344,7 @@ const MainComponent = () => {
                 <div id="label-container" className = "w-full bg-slate-50 rounded-lg flex-col"></div>
                 <div id = "content-character"></div>
             </div>
-        <div className = "w-1/5 h-full bg-white"></div>
+        <div className = "w-1/5 h-full"></div>
     </div>
     </>
     )
