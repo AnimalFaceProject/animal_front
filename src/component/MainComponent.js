@@ -2,11 +2,13 @@ import React, {useState, useEffect, useRef} from "react";
 import * as tf from '@tensorflow/tfjs';
 import * as tmImage from '@teachablemachine/image';
 import test from '../test.png'
+import man from '../logo.svg'
 import Switch from "react-switch";
 // 파이어베이서 파일에서 import 해온 db
 import {db} from './firebase'
 // db에 접근해서 데이터를 꺼내게 도와줄 친구들
 import { collection, getDocs, addDoc, updateDoc, doc, getDoc } from "@firebase/firestore";
+import RingLoader from "react-spinners/RingLoader";
 
 const MainComponent = () => {
     
@@ -22,6 +24,7 @@ const MainComponent = () => {
     const [participant, setParticipant] = useState(0);
     const [man, setMan] = useState(0);
     const [girl, setGirl] = useState(0);
+    const [manOrGirl, setManOrGirl] = useState(true);
     // 이따가 users 추가하고 삭제하는거 진행을 도와줄 state
     const [data, setData] = useState([]);
 
@@ -34,9 +37,11 @@ const MainComponent = () => {
     const onOffChange = () =>{
         if(state === false) {
             setChecked(true);
+            setManOrGirl(true);
         }
         else {
             setChecked(false);
+            setManOrGirl(false);
         }
     }
 
@@ -94,6 +99,7 @@ const MainComponent = () => {
 
      // Load the image model and setup the webcam
      async function init() {
+        document.getElementById('loader').className = "visible w-full flex flex-col items-center text-4xl text-white";
          // load the model and metadata
          // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
          // or files from your local hard drive
@@ -106,6 +112,7 @@ const MainComponent = () => {
          webcam = new tmImage.Webcam(600, 600, flip); // width, height, flip
          await webcam.setup(); // request access to the webcam
          await webcam.play();
+         document.getElementById('loader').remove();
          requestId = window.requestAnimationFrame(loop);
          
          // append elements to the DOM
@@ -119,8 +126,14 @@ const MainComponent = () => {
      async function loop() {
         if(time.current<=-1) {
             document.getElementById('webcam-container').remove();
-            insertImage(prediction[0].className);
-            content(prediction[0].className);
+            if(manOrGirl === true) {
+                insertGirlImage(prediction[0].className);
+                girlContent(prediction[0].className);
+            }
+            else if(manOrGirl === false) {
+                insertManImage(prediction[0].className);
+                manContent(prediction[0].className);
+            }
             return;
         }
         webcam.update(); // update the webcam frame
@@ -138,13 +151,24 @@ const MainComponent = () => {
          for (let i = 0; i < 6; i++) {
             var barWidth = prediction[i].probability.toFixed(2)*100 + "%";
             var labelTitle = prediction[i].className;
-            var animalName = "<div class='w-20 h-full text-2xl'>" + labelTitle + "</div>"
-            var animmalBar1 = "<div class='w-full h-full bg-[#f0bcd4] rounded-lg'><div class='bg-[#FF99C8] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-            var animmalBar2 = "<div class='w-full h-full bg-[#faf7dd] rounded-lg'><div class='bg-[#FCF6BD] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-            var animmalBar3 = "<div class='w-full h-full bg-[#ddefe4] rounded-lg'><div class='bg-[#aef4c9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-            var animmalBar4 = "<div class='w-full h-full bg-[#ceeaf8] rounded-lg'><div class='bg-[#A9DEF9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-            var animmalBar5 = "<div class='w-full h-full bg-[#ebd8f7] rounded-lg'><div class='bg-[#E4C1F9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-            var animmalBar6 = "<div class='w-full h-full bg-sky-600 rounded-lg'><div class='bg-blue-600 h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+            if(manOrGirl === true){
+                var animalName = "<div class='w-20 h-full text-2xl'>" + labelTitle + "</div>"
+                var animmalBar1 = "<div class='w-full h-full bg-[#f0bcd4] rounded-lg'><div class='bg-[#FF99C8] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar2 = "<div class='w-full h-full bg-[#faf7dd] rounded-lg'><div class='bg-[#FCF6BD] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar3 = "<div class='w-full h-full bg-[#ddefe4] rounded-lg'><div class='bg-[#aef4c9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar4 = "<div class='w-full h-full bg-[#ceeaf8] rounded-lg'><div class='bg-[#A9DEF9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar5 = "<div class='w-full h-full bg-[#ebd8f7] rounded-lg'><div class='bg-[#E4C1F9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar6 = "<div class='w-full h-full bg-sky-600 rounded-lg'><div class='bg-blue-600 h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+            }
+            else if(manOrGirl === false){
+                var animalName = "<div class='w-20 h-full text-2xl'>" + labelTitle + "</div>"
+                var animmalBar1 = "<div class='w-full h-full bg-[#f0bcd4] rounded-lg'><div class='bg-[#FF99C8] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar2 = "<div class='w-full h-full bg-[#faf7dd] rounded-lg'><div class='bg-[#FCF6BD] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar3 = "<div class='w-full h-full bg-[#ddefe4] rounded-lg'><div class='bg-[#aef4c9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar4 = "<div class='w-full h-full bg-[#ceeaf8] rounded-lg'><div class='bg-[#A9DEF9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar5 = "<div class='w-full h-full bg-[#ebd8f7] rounded-lg'><div class='bg-[#E4C1F9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar6 = "<div class='w-full h-full bg-sky-600 rounded-lg'><div class='bg-blue-600 h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+            }
             switch(i){
                 case 0:
                     labelContainer.childNodes[i].innerHTML = animalName + animmalBar1;
@@ -170,7 +194,7 @@ const MainComponent = () => {
             }
          }
      }
-     function content(title){
+     function girlContent(title){
         switch(title){
             case "사슴상": 
             document.getElementById("first-name").innerHTML = "사슴상";
@@ -217,36 +241,98 @@ const MainComponent = () => {
             break;
         }
     }
-    function insertImage(title){
+    function manContent(title){
         switch(title){
             case "사슴상": 
-            document.getElementById("image-container").innerHTML = '<img src="' + test + '"/>';
+            document.getElementById("first-name").innerHTML = "사슴상";
+            document.getElementById("content").innerHTML = "\
+    "
+            document.getElementById("content-character").innerHTML = "ENFJ 연예인 : 강다니엘 공명 수호(EXO) 박소담 우기(아이들) 신민아 신세경"
             break;
             case "꼬부기상": 
-            document.getElementById("image-container").innerHTML = '<img src="' + test + '"/>';
+            document.getElementById("first-name").innerHTML = "꼬부기상";
+            document.getElementById("content").innerHTML = "\
+";
+            document.getElementById("content-character").innerHTML = "ENFP 연예인 : 강민경 로제(BLACKPINK) 박준형(god) 비비 송민호 싸이 사나(TWICE) 유나(ITZY) 이효리 하하"
             break;
             case "고양이상": 
-            document.getElementById("image-container").innerHTML = '<img src="' + test + '"/>';
+            document.getElementById("first-name").innerHTML = "고양이상";
+            document.getElementById("content").innerHTML = "\
+  ";
+            document.getElementById("content-character").innerHTML = "고양이상 연예인 : 이효리 한예슬 뉴진스 해린 김희선 김민희 한채영"
             break;
             case "토끼상": 
-            document.getElementById("image-container").innerHTML = '<img src="' + test + '"/>';
+            document.getElementById("first-name").innerHTML = "토끼상";
+            document.getElementById("content").innerHTML = "\
+";
+            document.getElementById("content-character").innerHTML = "ENTJ 연예인 : 곽동연 서현 스윙스 문가영 여진구 윤하 이특 키 마크툽"
             break;
             case "사막여우상": 
-            document.getElementById("image-container").innerHTML = '<img src="' + test + '"/>';
+            document.getElementById("first-name").innerHTML = "사막여우상";
+            document.getElementById("content").innerHTML = "\
+            ";
+            document.getElementById("content-character").innerHTML = "ENTJ 연예인 : 곽동연 서현 스윙스 문가영 여진구 윤하 이특 키 마크툽"
             break;
             case "강아지상": 
-            document.getElementById("image-container").innerHTML = '<img src="' + test + '"/>';
+            document.getElementById("first-name").innerHTML = "강아지상";
+            document.getElementById("content").innerHTML = "\
+";
+            document.getElementById("content-character").innerHTML = "강아지상 연예인 : 박보영 한가인 김태희 구혜선 문근영 임수정 한효주"
+            break;
+        }
+    }
+    function insertGirlImage(title){
+        switch(title){
+            case "사슴상": 
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + test + '"/>';
+            break;
+            case "꼬부기상": 
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + test + '"/>';
+            break;
+            case "고양이상": 
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + test + '"/>';
+            break;
+            case "토끼상": 
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + test + '"/>';
+            break;
+            case "사막여우상": 
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + test + '"/>';
+            break;
+            case "강아지상": 
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full"src="' + test + '"/>';
+            break;
+        }
+    }
+    function insertManImage(title){
+        switch(title){
+            case "사슴상": 
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man + '"/>';
+            break;
+            case "꼬부기상": 
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man + '"/>';
+            break;
+            case "고양이상": 
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man + '"/>';
+            break;
+            case "토끼상": 
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man + '"/>';
+            break;
+            case "사막여우상": 
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man + '"/>';
+            break;
+            case "강아지상": 
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full"src="' + man + '"/>';
             break;
         }
     }
     return(
         <>
-        <div className = "w-full h-52 flex flex-col justify-around">
-        <div className = "w-full flex justify-center text-5xl">동물상 테스트</div>
+        <div className = "w-full h-52 flex flex-col justify-around bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...">
+        <div className = "w-full flex justify-center text-5xl">Ai animal Test</div>
             <div className = "flex w-full justify-evenly">
                 <div className = "text-4xl">남자 참가자 수 : {man}</div>
                     <div className = "w-40 flex justify-around">
-                        <button className = "text-4xl" type="button" onClick={() => {init();}}>시작</button>
+                        <button className = "canvasBtn text-4xl" id="startButton" type="button" onClick={() => {init();}}>시작</button>
                         <button className = "text-4xl" type="button" onClick={() => {timer();}}>판별</button>
                     </div>
                 <div className = "text-4xl">여자 참가자 수 : {girl}</div>
@@ -330,19 +416,22 @@ const MainComponent = () => {
             </div>
         </div>
 
-        <div className = "flex w-screen h-screen">
-            <div className = "w-1/5 h-full"></div>
+        <div id = "loader" className = "invisible w-full justify-center">Ai가 분석을 위해 세팅중입니다.
+            <RingLoader color="#36d7b7" className = "w-full justify-center"/>
+        </div>
+        <div className = "flex w-screen h-screen mt-10">
+            <div className = "w-1/5 h-full"></div> 
             <div className = "w-3/5 h-full">
                 <div id="webcam-container" className = "w-full relative">
                 <div className = "h-full w-full absolute z-10 flex justify-center items-center">
                     <div className = "text-9xl text-orange-50">{time.current}</div>
                 </div>
                 </div>
-                <div id = "image-container"></div>
-                <div id = "first-name" className = "flex justify-center w-full items-center font-bold text-2xl"></div>
-                <div id = "content" className = "w-full mb-4 text-3xl"></div>
+                <div id = "image-container" className = "rounded-3xl"></div>
+                <div id = "first-name" className = "flex justify-center w-full items-center font-bold text-7xl text-white mt-4 underline decoration-sky-500 decoration-wavy ... mb-4"></div>
+                <div id = "content-character" className = "text-3xl text-white mb-4"></div>
+                <div id = "content" className = "w-full mb-4 text-4xl"></div>
                 <div id="label-container" className = "w-full bg-slate-50 rounded-lg flex-col"></div>
-                <div id = "content-character"></div>
             </div>
         <div className = "w-1/5 h-full"></div>
     </div>
