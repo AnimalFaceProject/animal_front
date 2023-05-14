@@ -1,0 +1,106 @@
+
+.main-frist-container {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg,#F6416C 0%,    #FFF6B7 100%);
+    padding-top: 100px;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+}
+.outer-form {
+    width: 90%;
+    height: 97%;
+    margin: 0px auto;
+    background-color: #FFFFFF;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.main-title {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    font-size: 7rem;
+    font-weight: 800;
+    padding-top: 15px;
+    width: 80%;
+    margin: 30px 0px;
+    background: linear-gradient(135deg,#FD6585 0%,    #FFD3A5 100%);
+    border-radius: 25px;
+    color: rgb(0, 0, 0);
+    /* background-color: aqua; */
+}
+.first-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.change-gender {
+    padding: 10px 0px;
+}
+
+
+
+.main-current-participant {
+    font-size: 3rem;
+    background-color: rgb(105, 212, 100);
+}
+.label-container {
+    width: 100%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    /* background-color: yellow; */
+}
+.main-buttons-container{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    justify-content: center;
+    font-size: 3rem;
+    margin: 15px 0px;
+}
+.main-button{
+    border-radius: 25px;
+    background-color: #F6416C;
+    width: 50%;
+    height: 60px;
+    font-size: 2.4rem;
+    color: rgb(0, 0, 0);
+    font-weight: 700;
+    background: rgb(215, 98, 194);
+    background: linear-gradient(135deg,#FD6585 0%,    #FFD3A5 100%);
+    /* background: linear-gradient(90deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%); */
+    border: 0px;
+    cursor: pointer;
+    transition: opacity 0.25s ease-out;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  .main-button-space {
+    width: 20px;
+  }
+  
+  .main-button:hover{
+    opacity: 0.8;
+  }
+
+
+#loader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    color: #F6416C;
+    /* background-color: tomato; */
+}
+
+.main-content {
+    /* background-color: seagreen; */
+    width: 80%;
+    /* height: 100%; */
+    margin: 0 auto;
+}
