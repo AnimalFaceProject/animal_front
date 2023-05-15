@@ -154,21 +154,21 @@ const MainComponent = () => {
             var labelTitle = prediction[i].className;
             if(manOrGirl === true){
                 var animalName = "<div class='w-20 h-full text-3xl'>" + labelTitle + "</div>"
-                var animmalBar1 = "<div class='w-full h-full bg-[#f0bcd4] rounded-lg'><div class='bg-[#FF99C8] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-                var animmalBar2 = "<div class='w-full h-full bg-[#faf7dd] rounded-lg'><div class='bg-[#FCF6BD] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-                var animmalBar3 = "<div class='w-full h-full bg-[#ddefe4] rounded-lg'><div class='bg-[#aef4c9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-                var animmalBar4 = "<div class='w-full h-full bg-[#ceeaf8] rounded-lg'><div class='bg-[#A9DEF9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-                var animmalBar5 = "<div class='w-full h-full bg-[#ebd8f7] rounded-lg'><div class='bg-[#E4C1F9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-                var animmalBar6 = "<div class='w-full h-full bg-[#c774fb] rounded-lg'><div class='bg-[#dfadfe] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar1 = "<div class='w-full h-full animalbar1 bg-[#ffe1f0] rounded-lg'><div class='bg-[#ff64ac] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar2 = "<div class='w-full h-full animalbar2 bg-[#faf7dd] rounded-lg'><div class='bg-[#fff170] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar3 = "<div class='w-full h-full animalbar3 bg-[#ddefe4] rounded-lg'><div class='bg-[#7efdaf] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar4 = "<div class='w-full h-full animalbar4 bg-[#ceeaf8] rounded-lg'><div class='bg-[#68cdff] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar5 = "<div class='w-full h-full animalbar5 bg-[#ebd8f7] rounded-lg'><div class='bg-[#cb71ff] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar6 = "<div class='w-full h-full animalbar6 bg-[#ffe0c0] rounded-lg'><div class='bg-[#fca951] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
             }
             else if(manOrGirl === false){
                 var animalName = "<div class='w-20 h-full text-3xl'>" + labelTitle + "</div>"
-                var animmalBar1 = "<div class='w-full h-full bg-[#f0bcd4] rounded-lg'><div class='bg-[#FF99C8] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-                var animmalBar2 = "<div class='w-full h-full bg-[#faf7dd] rounded-lg'><div class='bg-[#FCF6BD] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-                var animmalBar3 = "<div class='w-full h-full bg-[#ddefe4] rounded-lg'><div class='bg-[#aef4c9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-                var animmalBar4 = "<div class='w-full h-full bg-[#ceeaf8] rounded-lg'><div class='bg-[#A9DEF9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-                var animmalBar5 = "<div class='w-full h-full bg-[#ebd8f7] rounded-lg'><div class='bg-[#E4C1F9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
-                var animmalBar6 = "<div class='w-full h-full bg-[#c774fb] rounded-lg'><div class='bg-[#dfadfe] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar1 = "<div class='w-full h-full animalbar1 bg-[#ffe1f0] rounded-lg'><div class='bg-[#ff64ac] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar2 = "<div class='w-full h-full animalbar2 bg-[#faf7dd] rounded-lg'><div class='bg-[#fff170] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar3 = "<div class='w-full h-full animalbar3 bg-[#ddefe4] rounded-lg'><div class='bg-[#7efdaf] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar4 = "<div class='w-full h-full animalbar4 bg-[#ceeaf8] rounded-lg'><div class='bg-[#68cdff] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar5 = "<div class='w-full h-full animalbar5 bg-[#ebd8f7] rounded-lg'><div class='bg-[#cb71ff] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
+                var animmalBar6 = "<div class='w-full h-full animalbar6 bg-[#ffe0c0] rounded-lg'><div class='bg-[#fca951] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
             }
             switch(i){
                 case 0:
@@ -192,7 +192,7 @@ const MainComponent = () => {
                 default :
                     console.log(i);
                     break;
-            }
+            } 
          }
      }
      function girlContent(title){
