@@ -147,13 +147,13 @@ const MainComponent = () => {
          // predict can take in an image, video or canvas html element
 
         prediction = await model.predict(webcam.canvas);
-        prediction.sort((a,b) => parseFloat(b.probability) - parseFloat(a.probability));
+        // prediction.sort((a,b) => parseFloat(b.probability) - parseFloat(a.probability));
 
          for (let i = 0; i < 6; i++) {
             var barWidth = prediction[i].probability.toFixed(2)*100 + "%";
             var labelTitle = prediction[i].className;
             if(manOrGirl === true){
-                var animalName = "<div class='w-20 h-full text-2xl'>" + labelTitle + "</div>"
+                var animalName = "<div class='w-20 h-full text-3xl'>" + labelTitle + "</div>"
                 var animmalBar1 = "<div class='w-full h-full bg-[#f0bcd4] rounded-lg'><div class='bg-[#FF99C8] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
                 var animmalBar2 = "<div class='w-full h-full bg-[#faf7dd] rounded-lg'><div class='bg-[#FCF6BD] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
                 var animmalBar3 = "<div class='w-full h-full bg-[#ddefe4] rounded-lg'><div class='bg-[#aef4c9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
@@ -162,7 +162,7 @@ const MainComponent = () => {
                 var animmalBar6 = "<div class='w-full h-full bg-sky-600 rounded-lg'><div class='bg-blue-600 h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
             }
             else if(manOrGirl === false){
-                var animalName = "<div class='w-20 h-full text-2xl'>" + labelTitle + "</div>"
+                var animalName = "<div class='w-20 h-full text-3xl'>" + labelTitle + "</div>"
                 var animmalBar1 = "<div class='w-full h-full bg-[#f0bcd4] rounded-lg'><div class='bg-[#FF99C8] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
                 var animmalBar2 = "<div class='w-full h-full bg-[#faf7dd] rounded-lg'><div class='bg-[#FCF6BD] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
                 var animmalBar3 = "<div class='w-full h-full bg-[#ddefe4] rounded-lg'><div class='bg-[#aef4c9] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
