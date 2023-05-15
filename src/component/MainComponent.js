@@ -9,6 +9,7 @@ import {db} from './firebase'
 // db에 접근해서 데이터를 꺼내게 도와줄 친구들
 import { collection, getDocs, addDoc, updateDoc, doc, getDoc } from "@firebase/firestore";
 import RingLoader from "react-spinners/RingLoader";
+import "../MainComponent.css"
 
 const MainComponent = () => {
     
@@ -326,116 +327,143 @@ const MainComponent = () => {
         }
     }
     return(
-        <>
-        <div className = "w-full h-52 flex flex-col justify-around bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...">
-        <div className = "w-full flex justify-center text-5xl">Ai animal Test</div>
-            <div className = "flex w-full justify-evenly">
-                <div className = "text-4xl">남자 참가자 수 : {man}</div>
-                    <div className = "w-40 flex justify-around">
-                        <button className = "canvasBtn text-4xl" id="startButton" type="button" onClick={() => {init();}}>시작</button>
-                        <button className = "text-4xl" type="button" onClick={() => {timer();}}>판별</button>
+        <div className="main-frist-container">
+            
+            <div className="outer-form">
+                <div className = "first-form">
+                    <div className = "main-title">
+                        Ai animal Test
                     </div>
-                <div className = "text-4xl">여자 참가자 수 : {girl}</div>
-            </div>
-            <div className = "w-full flex justify-center text-4xl">현재 참가자 수 : {participant}</div>
-            <div className = "w-full flex justify-center">
-            <label htmlFor="material-switch">
-                <Switch
-                checked={state}
-                onChange={onOffChange}
-                handleDiameter={28}
-                offColor="#869df6"
-                onColor="#f6868a"
-                offHandleColor="#ffffff"
-                onHandleColor="#ffffff"
-                height={40}
-                width={100}
-                borderRadius={6}
-                activeBoxShadow="0px 0px 1px 2px #f7ffe6"
-                uncheckedIcon={
-                    <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "40px",
-                        fontSize: 20,
-                        color: "black",
-                        paddingRight: 2,
-                    }}
-                    >
-                    남자
+                    <div className = "w-full flex justify-center">
+                        <div className="label-container">
+                            <label htmlFor="material-switch" className="change-gender">
+                                    <Switch
+                                        className="react-switch"
+                                        id="small-radius-switch"
+                                        checked={state}
+                                        onChange={onOffChange}
+                                        handleDiameter={28}
+                                        offColor="#869df6"
+                                        onColor="#f6868a"
+                                        offHandleColor="#ffffff"
+                                        onHandleColor="#ffffff"
+                                        height={40}
+                                        width={100}
+                                        borderRadius={6}
+                                        activeBoxShadow="0px 0px 1px 2px #f7ffe6"
+                                        uncheckedIcon={
+                                            <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                height: "40px",
+                                                fontSize: 20,
+                                                color: "black",
+                                                paddingRight: 2,
+                                            }}
+                                            >
+                                            남자
+                                            </div>
+                                        }
+                                        checkedIcon={
+                                            <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                height: "100%",
+                                                fontSize: 22,
+                                                color: "white",
+                                                paddingRight: 2,
+                                            }}
+                                            >
+                                            여자
+                                            </div>
+                                        }
+                                        uncheckedHandleIcon={
+                                            <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                height: "100%",
+                                                fontSize: 20,
+                                            }}
+                                            >
+                                            👨
+                                            </div>
+                                        }
+                                        checkedHandleIcon={
+                                            <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                height: "100%",
+                                                color: "red",
+                                                fontSize: 18,
+                                            }}
+                                            >
+                                            👩
+                                            </div>
+                                        }
+                                        
+                                    />
+                            </label>
+                        </div>
                     </div>
-                }
-                checkedIcon={
-                    <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "100%",
-                        fontSize: 22,
-                        color: "white",
-                        paddingRight: 2,
-                    }}
-                    >
-                    여자
+                    <div className = "main-buttons-container">
+                        {/* <div className = "text-4xl">
+                            남자 참가자 수 : {man}
+                        </div> */}
+                  
+                        <button className = "main-button"  onClick={() => {init();}}>시작</button>
+                        <div className="main-button-space"></div>
+                        <button className = "main-button"  onClick={() => {timer();}}>판별</button>
+                 
+                        {/* <div className = "text-4xl">
+                            여자 참가자 수 : {girl}
+                        </div> */}
                     </div>
-                }
-                uncheckedHandleIcon={
-                    <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "100%",
-                        fontSize: 20,
-                    }}
-                    >
-                    👨
-                    </div>
-                }
-                checkedHandleIcon={
-                    <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "100%",
-                        color: "red",
-                        fontSize: 18,
-                    }}
-                    >
-                    👩
-                    </div>
-                }
-                className="react-switch"
-                id="small-radius-switch"
-                />
-            </label>
-            </div>
-        </div>
+                    {/* <div className = "w-full flex justify-center main-current-participant">현재 참가자 수 : {participant}
+                    </div> */}
+                   
+                </div>
 
-        <div id = "loader" className = "invisible w-full justify-center">Ai가 분석을 위해 세팅중입니다.
-            <RingLoader color="#36d7b7" className = "w-full justify-center"/>
-        </div>
-        <div className = "flex w-screen h-screen mt-10">
-            <div className = "w-1/5 h-full"></div> 
-            <div className = "w-3/5 h-full">
-                <div id="webcam-container" className = "w-full relative">
-                <div className = "h-full w-full absolute z-10 flex justify-center items-center">
-                    <div className = "text-9xl text-orange-50">{time.current}</div>
+                <div id = "loader" className = "invisible w-full justify-center">
+                    Ai가 분석을 위해 세팅중입니다.
+                    <RingLoader color="#36d7b7" className = "w-full justify-center"/>
                 </div>
+            
+                
+                    {/* 가운데 메인*/}
+                <div className = "main-content">
+                    <div id="webcam-container" className = "w-full relative">
+                        <div className = "h-full w-full absolute z-10 flex justify-center items-center">
+                            <div className = "text-9xl text-orange-50">
+                                {time.current}
+                            </div>
+                        </div>
+                    </div>
+                    <div id = "image-container" className = "rounded-3xl">
+
+                    </div>
+                    <div id = "first-name" className = "flex justify-center w-full items-center font-bold text-7xl text-black mt-4 underline decoration-sky-500 decoration-wavy ... mb-4">
+
+                    </div>
+                    <div id = "content-character" className = "text-3xl text-black mb-4">
+
+                    </div>
+                    <div id = "content" className = "w-full mb-4 text-4xl">
+
+                    </div>
+                    <div id="label-container" className = "w-full bg-slate-50 rounded-lg flex-col">
+
+                    </div>
                 </div>
-                <div id = "image-container" className = "rounded-3xl"></div>
-                <div id = "first-name" className = "flex justify-center w-full items-center font-bold text-7xl text-white mt-4 underline decoration-sky-500 decoration-wavy ... mb-4"></div>
-                <div id = "content-character" className = "text-3xl text-white mb-4"></div>
-                <div id = "content" className = "w-full mb-4 text-4xl"></div>
-                <div id="label-container" className = "w-full bg-slate-50 rounded-lg flex-col"></div>
             </div>
-        <div className = "w-1/5 h-full"></div>
-    </div>
-    </>
+        </div>
     )
 }
 export default MainComponent;
