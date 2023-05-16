@@ -1,8 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import * as tf from '@tensorflow/tfjs';
 import * as tmImage from '@teachablemachine/image';
-import test from '../test.png'
-import man from '../logo.svg'
 import Switch from "react-switch";
 // 파이어베이서 파일에서 import 해온 db
 import {db} from './firebase'
@@ -10,6 +8,21 @@ import {db} from './firebase'
 import { collection, getDocs, addDoc, updateDoc, doc, getDoc } from "@firebase/firestore";
 import RingLoader from "react-spinners/RingLoader";
 import "../MainComponent.css"
+import test from '../test.png'
+import man from '../logo.svg'
+import girl_cat from '../image/girl_cat.jpg';
+import girl_deer from '../image/girl_deer.jpg';
+import girl_dog from '../image/girl_dog.jpg';
+import girl_fox from '../image/girl_fox.jpg';
+import girl_rabbit from '../image/girl_rabbit.jpg';
+import girl_tuttle from '../image/girl_tuttle.jpg';
+import man_cat from '../image/man_cat.jpg';
+import man_dog from '../image/man_dog.jpg';
+import man_bear from '../image/man_bear.jpg';
+import man_fox from '../image/man_fox.jpg';
+import man_rabbit from '../image/man_rabbit.jpg';
+import man_dino from '../image/man_dino.jpg';
+
 
 const MainComponent = () => {
     
@@ -300,44 +313,44 @@ const MainComponent = () => {
     function insertGirlImage(title){
         switch(title){
             case "사슴상": 
-            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + test + '"/>';
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + girl_deer + '"/>';
             break;
             case "꼬부기상": 
-            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + test + '"/>';
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + girl_tuttle + '"/>';
             break;
             case "고양이상": 
-            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + test + '"/>';
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + girl_cat + '"/>';
             break;
             case "토끼상": 
-            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + test + '"/>';
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + girl_rabbit + '"/>';
             break;
-            case "사막여우상": 
-            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + test + '"/>';
+            case "여우상": 
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + girl_fox + '"/>';
             break;
             case "강아지상": 
-            document.getElementById("image-container").innerHTML = '<img class="rounded-full"src="' + test + '"/>';
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + girl_dog + '"/>';
             break;
         }
     }
     function insertManImage(title){
         switch(title){
             case "강아지상": 
-            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man + '"/>';
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man_dog + '"/>';
             break;
             case "고양이상": 
-            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man + '"/>';
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man_cat + '"/>';
             break;
             case "곰상": 
-            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man + '"/>';
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man_bear + '"/>';
             break;
             case "토끼상": 
-            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man + '"/>';
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man_rabbit + '"/>';
             break;
             case "공룡상": 
-            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man + '"/>';
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full" src="' + man_dino + '"/>';
             break;
             case "여우상": 
-            document.getElementById("image-container").innerHTML = '<img class="rounded-full"src="' + man + '"/>';
+            document.getElementById("image-container").innerHTML = '<img class="rounded-full"src="' + man_fox + '"/>';
             break;
         }
     }
@@ -461,7 +474,7 @@ const MainComponent = () => {
                             </div>
                         </div>
                     </div>
-                    <div id = "image-container" className = "rounded-3xl">
+                    <div id = "image-container" className = "rounded-3xl flex justify-center">
 
                     </div>
                     <div id = "first-name" className = "flex justify-center w-full items-center font-bold text-7xl text-black mt-4 underline decoration-sky-500 decoration-wavy ... mb-4">
