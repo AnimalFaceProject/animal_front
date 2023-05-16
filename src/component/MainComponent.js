@@ -14,11 +14,11 @@ import "../MainComponent.css"
 const MainComponent = () => {
     
     // the link to your model provided by Teachable Machine export panel
-    const girlURL = "https://teachablemachine.withgoogle.com/models/MOKr2fQhl/";
+    const girlURL = "https://teachablemachine.withgoogle.com/models/BZxTIBZB0/";
     const modelGirlURL = girlURL + 'model.json';
     const metadataGirlURL = girlURL + 'metadata.json';
 
-    const manURL = "https://teachablemachine.withgoogle.com/models/8PwZkWvxj/";
+    const manURL = "https://teachablemachine.withgoogle.com/models/WXwNwq3F0/";
     const modelManURL = manURL + 'model.json';
     const metadataManURL = manURL + 'metadata.json';
 
