@@ -135,6 +135,7 @@ const MainComponent = () => {
  
      async function loop() {
         if(time.current<=-1) {
+            prediction.sort((a,b) => parseFloat(b.probability) - parseFloat(a.probability));
             document.getElementById('webcam-container').remove();
             if(manOrGirl === true) {
                 insertGirlImage(prediction[0].className);
@@ -154,14 +155,12 @@ const MainComponent = () => {
      // run the webcam image through the image model
     const predict = async () =>{
          // predict can take in an image, video or canvas html element
-
         prediction = await model.predict(webcam.canvas);
-        // prediction.sort((a,b) => parseFloat(b.probability) - parseFloat(a.probability));
 
          for (let i = 0; i < 6; i++) {
-            var barWidth = prediction[i].probability.toFixed(2)*100 + "%";
-            var labelTitle = prediction[i].className;
             if(manOrGirl === true){
+                var barWidth = prediction[i].probability.toFixed(2)*100 + "%";
+                var labelTitle = prediction[i].className;
                 var animalName = "<div class='w-20 h-full text-3xl'>" + labelTitle + "</div>"
                 var animmalBar1 = "<div class='w-full h-full animalbar1 bg-[#ffe1f0] rounded-lg'><div class='bg-[#ff64ac] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
                 var animmalBar2 = "<div class='w-full h-full animalbar2 bg-[#faf7dd] rounded-lg'><div class='bg-[#fff170] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
@@ -171,6 +170,8 @@ const MainComponent = () => {
                 var animmalBar6 = "<div class='w-full h-full animalbar6 bg-[#ffe0c0] rounded-lg'><div class='bg-[#fca951] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
             }
             else if(manOrGirl === false){
+                var barWidth = prediction[i].probability.toFixed(2)*100 + "%";
+                var labelTitle = prediction[i].className;
                 var animalName = "<div class='w-20 h-full text-3xl'>" + labelTitle + "</div>"
                 var animmalBar1 = "<div class='w-full h-full animalbar1 bg-[#ffe1f0] rounded-lg'><div class='bg-[#ff64ac] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
                 var animmalBar2 = "<div class='w-full h-full animalbar2 bg-[#faf7dd] rounded-lg'><div class='bg-[#fff170] h-full text-md font-medium text-black p-0.5 leading-none rounded-lg flex justify-center items-center' style='width: " + barWidth + "'><span class='d-block percent-text'>" + barWidth + "</span></div></div>"
@@ -211,13 +212,14 @@ const MainComponent = () => {
             document.getElementById("content").innerHTML = "\
             청순한 매력으로 보호본능을 자극하는 이목구비를 가진 사슴상 비주얼이에요. \
             전체적으로 맑고 영롱한 분위기로 온순하면서 우아한 이미지와 세련된 이목구비는 사슴상의 대표적인 특징이에요."
-            document.getElementById("content-character").innerHTML = "ENFJ 연예인 : 강다니엘 공명 수호(EXO) 박소담 우기(아이들) 신민아 신세경"
+            document.getElementById("content-character").innerHTML = "사슴상 연예인 : 김채원(르세라핌) 아린(오마이걸) 미연(아이들) 비니(오마이걸)"
             break;
             case "꼬부기상": 
             document.getElementById("first-name").innerHTML = "꼬부기상";
             document.getElementById("content").innerHTML = "\
-            웃을때 반달 모양이 되는데 귀엽습니다 입이 좌우로 엄청 크고 웃을때 입꼬리가 부드럽게 올라갑니다.";
-            document.getElementById("content-character").innerHTML = "ENFP 연예인 : 강민경 로제(BLACKPINK) 박준형(god) 비비 송민호 싸이 사나(TWICE) 유나(ITZY) 이효리 하하"
+            눈이 크고 특히 이 눈웃음이 매우 매력적인 꼬부기상입니다. \
+            특히 웃을 때 반달모양 눈과 예쁜 입매가 주변 사람을 행복하게 만들어요.";
+            document.getElementById("content-character").innerHTML = "꼬부기상 연예인 : 하연수 레드벨벳 예리 마마무 솔라 브브걸 유정"
             break;
             case "고양이상": 
             document.getElementById("first-name").innerHTML = "고양이상";
@@ -233,11 +235,11 @@ const MainComponent = () => {
             존재 자체가 상큼하고 깜찍한 당신은 특별한 애교 없이도 연인에게 너무나도 사랑스럽다!";
             document.getElementById("content-character").innerHTML = "토끼상 연예인 : 수지, 나연(트와이스), 예린(여자친구), 한승연(카라), 문채원"
             break;
-            case "사막여우상": 
-            document.getElementById("first-name").innerHTML = "사막여우상";
+            case "여우상": 
+            document.getElementById("first-name").innerHTML = "여우상";
             document.getElementById("content").innerHTML = "\
             사람을 홀리는 매력을 가진 당신은 선뜻 다가가기 힘든 섹시한 매력을 가졌다. 우아한 외모에 더해 뛰어난 센스의 성격을 가진 당신은 어딜가도 주목받는 주인공이다!\
-             사교적인 성격을 가져 연인에게도 적극적으로 애정표현을 하지만 밀당의 고수인 당신은 연인의 혼을 쏙 빼놓는 매력쟁이다.";
+            사교적인 성격을 가져 연인에게도 적극적으로 애정표현을 하지만 밀당의 고수인 당신은 연인의 혼을 쏙 빼놓는 매력쟁이다.";
             document.getElementById("content-character").innerHTML = "여우상 연예인: 경리(나인뮤지스), 예지(있지), 한혜진(모델), 헤이즈, 지연(티아라)"
             break;
             case "강아지상": 
@@ -256,40 +258,42 @@ const MainComponent = () => {
             document.getElementById("content").innerHTML = "\
             다정다감하고 귀여운 당신은 모든 사람들에게 즐거움을 주는 호감형이다! 친절하고 활발한 성격으로 어디에서도 인기폭발이며 애교와 웃음이 많아 연인에게 특히나 사랑스러워요.\
             당신은 애인바라기로 애인의 관심이 부족하면 시무룩해지고 외로움을 타는 모습이 마치 강아지와 똑 닮았어요!"
-            document.getElementById("content-character").innerHTML = "ENFJ 연예인 : 강다니엘 공명 수호(EXO) 박소담 우기(아이들) 신민아 신세경"
+            document.getElementById("content-character").innerHTML = "강아지상 연예인 : 박보검 송중기 백현 강다니엘"
             break;
             case "고양이상": 
             document.getElementById("first-name").innerHTML = "고양이상";
             document.getElementById("content").innerHTML = "\
             무뚝뚝한 당신의 첫인상은 차가워 보이지만 묘한 매력을 풍겨 언제나 인기가 넘친다. 자존심이 세계 1등과 맞먹지만 관심 받는 것을 좋아하고 연인에게는 은근히 애교쟁이다. \
             시크한 츤데레로 연인에게 끊임없이 설렘을 안겨주는 당신은 고양이와 닮았다!";
-            document.getElementById("content-character").innerHTML = "ENFP 연예인 : 강민경 로제(BLACKPINK) 박준형(god) 비비 송민호 싸이 사나(TWICE) 유나(ITZY) 이효리 하하"
+            document.getElementById("content-character").innerHTML = "고양이상 연예인 : 강동원 시우민(엑소) 이종석 이준기 황민현(워너원)"
             break;
             case "곰상": 
             document.getElementById("first-name").innerHTML = "곰상";
             document.getElementById("content").innerHTML = "\
             첫 인상은 무서워 보이지만 알고 보면 귀여운 매력의 당신! 꼼꼼하고 섬세한 성격으로 연인을 헌신적으로 챙겨주는 당신은 연인에게 듬직한 존재! \
             포근한 매력에 듬직함까지 갖춘 최고의 남자다!";
-            document.getElementById("content-character").innerHTML = "고양이상 연예인 : 이효리 한예슬 뉴진스 해린 김희선 김민희 한채영"
+            document.getElementById("content-character").innerHTML = "곰상 연예인 : 안재홍 조진웅 조세호 마동석"
             break;
             case "토끼상": 
             document.getElementById("first-name").innerHTML = "토끼상";
             document.getElementById("content").innerHTML = "\
             천진난만하고 귀여운 당신은 주변 사람들에게 기쁨을 주는 행복바이러스에요! 호기심이 많아 활발하며 귀엽고 순수한 외모로 연인의 보호본능을 자극한다. \
             존재 자체가 상큼한 당신은 특별한 애교 없이도 연인에게 너무나도 사랑스러운 특징을 갖고있어요!";  
-            document.getElementById("content-character").innerHTML = "ENTJ 연예인 : 곽동연 서현 스윙스 문가영 여진구 윤하 이특 키 마크툽"
+            document.getElementById("content-character").innerHTML = "토끼상 : bst정국 수호(엑소) 바비 박지훈(워너원)"
             break;
             case "공룡상": 
             document.getElementById("first-name").innerHTML = "공룡상";
             document.getElementById("content").innerHTML = "\
-            무심한 성격에 첫인상은 나쁜 남자 같지만, 알고 보면 따뜻함이 묻어나는 당신! 시크한 매력에 선뜻 다가가지 못하지만 한번 다가가면 헤어나올 수 없는 터프한 매력을 가진 카리스마 있는 남자다.";
-            document.getElementById("content-character").innerHTML = "ENTJ 연예인 : 곽동연 서현 스윙스 문가영 여진구 윤하 이특 키 마크툽"
+            무심한 성격에 첫인상은 나쁜 남자 같지만, 알고 보면 따뜻함이 묻어나는 당신! \
+            시크한 매력에 선뜻 다가가지 못하지만 한번 다가가면 헤어나올 수 없는 터프한 매력을 가진 카리스마 있는 남자다.";
+            document.getElementById("content-character").innerHTML = "공룡상 연예인 : 공유 김우빈 육성재 윤두준 이민기"
             break;
             case "여우상": 
             document.getElementById("first-name").innerHTML = "여우상";
             document.getElementById("content").innerHTML = "\
-";
-            document.getElementById("content-character").innerHTML = "강아지상 연예인 : 박보영 한가인 김태희 구혜선 문근영 임수정 한효주"
+            샤프한 윤곽에 깔끔한 콧날을 가진 여우상 비주얼이에요.\
+            사람을 홀리는 매력을 가진 여우상은 선뜻 다가가기 힘든 섹시한 매력을 가졌어요";
+            document.getElementById("content-character").innerHTML = "bts뷔 지드래곤 인피니트 성규 호시(세븐틴) b1a4진영"
             break;
         }
     }
@@ -443,7 +447,7 @@ const MainComponent = () => {
                 </div>
 
                 <div id = "loader" className = "invisible w-full justify-center">
-                    Ai가 분석을 위해 세팅중입니다.
+                    Ai가 분석을 위해 준비중입니다.
                     <RingLoader color="#36d7b7" className = "w-full justify-center"/>
                 </div>
             
